@@ -233,7 +233,7 @@ def trade_btc_in_post_only(btc_num: float):
             order_status = order_info_result['data'][0]['state']
             if order_status == "filled":
                 print("D")
-                print("trade done,at %.4f btc" % btc_num)
+                print("trade done,at %.4f btc 交易完成" % btc_num)
                 return
             elif order_status == "live":
                 time.sleep(1)
@@ -264,7 +264,7 @@ def trade_btc_in_post_only(btc_num: float):
             print("trade done,at %.4f btc" % btc_num)
             return
         print("R")
-    print("Trade Failed, Try Next Time" % btc_num)
+    print("Trade Failed, Try Next Time 交易失败，下个周期再试" % btc_num)
 
 
 def adjust_pos(now_pos, need):
@@ -277,7 +277,7 @@ def adjust_pos(now_pos, need):
     trade_num = need - now_pos
     if abs(int((trade_num * btc_per_zhang) * 100)) <= min_adjust_num or abs(trade_num) < abs(
             now_pos) * min_adjust_ratio:
-        print("adjust num is %f,no need to adjust" % (trade_num * btc_per_zhang))
+        print("adjust num is %f BTC,no need to adjust 单次交易量太少" % trade_num)
         return 0
     if fast_trade_mode == 0:
         trade_btc_in_post_only(trade_num)
@@ -322,10 +322,10 @@ def main():
             lev_info = cal_leverage(now_radio)
 
             if 0.01 < abs(lev_info) < 0.03:
-                print("ratio not clear, at %.2f do nothing" % abs(lev_info))
+                print("ratio not clear, at %.2f do nothing 无明显趋向，暂停运行" % abs(lev_info))
                 continue
             elif abs(lev_info) <= 0.01:
-                print("ratio is too small, at %.2f, clean pos" % abs(lev_info))
+                print("ratio is too small, at %.2f, clean pos 无明显趋向，空仓" % abs(lev_info))
                 clean_btc_pos()
                 continue
 
