@@ -383,4 +383,3 @@ def set_leverage(instId, s_lever):
 
 if __name__ == '__main__':
     main()
-    # test()
