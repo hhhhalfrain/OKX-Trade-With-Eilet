@@ -13,13 +13,15 @@ import okx.PublicData as PublicData
 demo_api_key = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxx"
 demo_api_secret_key = "XXXXXXXXXXXX"
 demo_passphrase = "你设置的密码"
-# 实盘apikey 必填，因为查询交易大数据必须使用实盘的API
+# 实盘apikey 必填，因为查询交易大数据必须使用实盘的API，模拟盘的API没有这个权限
 live_api_key = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxx"
 live_api_secret_key = "XXXXXXXXXXXX"
 live_passphrase = "你设置的密码"
 
 # live trading: 0, demo trading: 1 实盘0，模拟盘1
+# flag的双引号不能省略哦
 flag = "0"
+
 # 0: post only 只挂单, 1: market 直接市价成交
 fast_trade_mode = 0
 # 交易对代码
@@ -28,15 +30,17 @@ INST_ID = "BTC-USDT-SWAP"
 btc_per_zhang = 100
 # 每周期后的等待时间（秒）
 wait_time = 5
+
 # 最小调整单位数量（单位是最小允许交易数量，就okx的BTC合约而言是0.0001BTC，0.01张）
 # 此处10代表调整数量小于0.001BTC不调整
 min_adjust_num = 10
 # 最小调整比例 0.1代表调整比例小于10%时不调整，比如现在持有1BTC，只调整到1.09BTC，不调整
 min_adjust_ratio = 0.1
-# 紧急停机与检测脚本是否还在运行的测试交易对名
+
+# 暂停脚本与检测脚本是否还在运行的测试交易对名
 # 1 若此交易对的杠杆被手动设置成了1.0，则脚本会暂停运行
 # 2 若此交易对的杠杆不为1.0，则脚本会修改为10.0，可以通过修改此交易对的杠杆来检测脚本是否还在运行
-KEEP_ALIVE_INST_ID = "COOKIE-USDT-SWAP"
+KEEP_ALIVE_INST_ID = "AAVE-USDT-SWAP"
 
 if flag == "0":
     api_key = live_api_key
@@ -301,7 +305,7 @@ def main():
     while 1:
         try:
             alive = get_leverage_info(KEEP_ALIVE_INST_ID)
-            # COOKIE-SWAP is the token of the exchange, if it isn't equal 1, we can continue
+            # AAVE-SWAP is the token of the exchange, if it isn't equal 1, we can continue
             if alive == 1.0:
                 time.sleep(5)
                 continue
